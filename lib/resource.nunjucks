@@ -142,7 +142,10 @@
                     {% if method.body %}
                       <h3>Body</h3>
                       {% for key, b in method.body %}
-                        <p><strong>Type: {{ key }}</strong></p>
+                        <p><strong>Content-Type: {{ key }}</strong></p>
+                        {% if b.type %}
+                          <p><strong>Type: {{ b.type }}</strong></p>
+                        {% endif %}
                         {% if b.formParameters %}
                           <strong>Form Parameters</strong>
                           <ul>
@@ -159,7 +162,11 @@
 
                         {% if b.example %}
                           <p><strong>Example</strong>:</p>
-                          <pre><code>{{ b.example | escape }}</code></pre>
+                          {% if b.type %}
+                            <pre><code>{{ b.example | stringify }}</code></pre>
+                          {% else %}
+                            <pre><code>{{ b.example | escape }}</code></pre>
+                          {% endif %}
                         {% endif %}
                       {% endfor %}
                     {% endif %}
@@ -191,7 +198,10 @@
                       {% if response.body %}
                         <h3>Body</h3>
                         {% for key, b in response.body %}
-                          <p><strong>Type: {{ key }}</strong></p>
+                          <p><strong>Content-Type: {{ key }}</strong></p>
+                          {% if b.type %}
+                            <p><strong>Type: {{ b.type }}</strong></p>
+                          {% endif %}
 
                           {% if b.schema %}
                             <p><strong>Schema</strong>:</p>
@@ -200,7 +210,11 @@
 
                           {% if b.example %}
                             <p><strong>Example</strong>:</p>
-                            <pre><code>{{ b.example | escape }}</code></pre>
+                            {% if b.type %}
+                              <pre><code>{{ b.example | stringify }}</code></pre>
+                            {% else %}
+                              <pre><code>{{ b.example | escape }}</code></pre>
+                            {% endif %}
                           {% endif %}
                         {% endfor %}
                       {% endif %}
